@@ -39,6 +39,9 @@ finetuned-model-*/
 *.onnx
 *.h5
 
+# --- Hugging Face downloads (models, datasets, tokens) — kept in-project to inspect ---
+hf_cache/
+
 # --- Datasets / caches ---
 data/
 datasets/
@@ -51,6 +54,7 @@ wandb/
 *.jpeg
 samples/
 outputs/
+comparison_images/
 
 # --- OS / editor cruft ---
 .DS_Store
