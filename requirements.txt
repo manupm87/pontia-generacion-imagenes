@@ -1,0 +1,9 @@
+diffusers
+datasets==2.16.*
+accelerate
+transformers
+torch
+torchvision
+huggingface_hub
+python-dotenv
+matplotlib
