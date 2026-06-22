@@ -56,6 +56,10 @@ samples/
 outputs/
 comparison_images/
 
+# --- Project-specific excludes ---
+pokemon/
+resources/
+
 # --- OS / editor cruft ---
 .DS_Store
 Thumbs.db
