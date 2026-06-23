@@ -31,6 +31,7 @@ dist/
 finetuned-model/
 finetuned-model-*/
 **/finetuned-model/
+lora-oldbooks/
 *.safetensors
 *.ckpt
 *.pt
@@ -55,6 +56,8 @@ wandb/
 samples/
 outputs/
 comparison_images/
+lora_comparison_images/
+comparison_finetuning_vs_lora/
 
 # --- Project-specific excludes ---
 pokemon/
