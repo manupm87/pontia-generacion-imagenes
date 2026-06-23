@@ -8,9 +8,15 @@ sobre el dataset de **ilustraciones de libros antiguos**
 [`gigant/oldbookillustrations`](https://huggingface.co/datasets/gigant/oldbookillustrations),
 para llevar el estilo del modelo hacia el de los grabados e ilustraciones antiguas.
 
-Solo se finetunea la **UNet** (el VAE y el text encoder se mantienen congelados). El modelo
-resultante se sube a Hugging Face:
-[`manupm87/finetuned-sd-1.4-oldbookillustrations`](https://huggingface.co/manupm87/finetuned-sd-1.4-oldbookillustrations).
+Solo se finetunea la **UNet** (el VAE y el text encoder se mantienen congelados).
+
+## Modelos publicados en Hugging Face
+
+- 🧩 **Finetuning completo (pipeline):** [`manupm87/finetuned-sd-1.4-oldbookillustrations`](https://huggingface.co/manupm87/finetuned-sd-1.4-oldbookillustrations)
+- 🪶 **LoRA (adaptador ligero):** [`manupm87/finetuned-sd-1.4-oldbookillustrations-lora`](https://huggingface.co/manupm87/finetuned-sd-1.4-oldbookillustrations-lora)
+
+Cada model card incluye imágenes de ejemplo y enlaza a la otra versión (el modelo completo y
+la LoRA están enlazados entre sí).
 
 ## Notebooks del proyecto
 
@@ -18,18 +24,18 @@ El repo tiene **tres** notebooks, pensados para ejecutarse en este orden:
 
 | Notebook | Qué hace | Salida principal |
 |---|---|---|
-| **`project.ipynb`** | *Finetuning completo* de la UNet sobre el dataset. | Pipeline en `finetuned-model-oldbooks/` + repo [`...oldbookillustrations`](https://huggingface.co/manupm87/finetuned-sd-1.4-oldbookillustrations) |
-| **`project_lora.ipynb`** | Entrena una **LoRA** para el mismo estilo (mucho más ligera y rápida). | Adaptador en `lora-oldbooks/` + repo [`...oldbookillustrations-lora`](https://huggingface.co/manupm87/finetuned-sd-1.4-oldbookillustrations-lora) |
-| **`project_comparison.ipynb`** | **Solo compara** (no entrena): genera una rejilla original vs. finetuning vs. LoRA con los mismos 5 prompts y semilla. | `comparison_finetuning_vs_lora.png` |
+| **`01_finetuning.ipynb`** | *Finetuning completo* de la UNet sobre el dataset. | Pipeline en `finetuned-model-oldbooks/` + repo [`...oldbookillustrations`](https://huggingface.co/manupm87/finetuned-sd-1.4-oldbookillustrations) |
+| **`02_lora.ipynb`** | Entrena una **LoRA** para el mismo estilo (mucho más ligera y rápida). | Adaptador en `lora-oldbooks/` + repo [`...oldbookillustrations-lora`](https://huggingface.co/manupm87/finetuned-sd-1.4-oldbookillustrations-lora) |
+| **`03_comparison.ipynb`** | **Solo compara** (no entrena): genera una rejilla original vs. finetuning vs. LoRA con los mismos 5 prompts y semilla. | `comparison_finetuning_vs_lora.png` |
 
-`project_comparison.ipynb` necesita que los otros dos se hayan ejecutado antes (usa sus
+`03_comparison.ipynb` necesita que los otros dos se hayan ejecutado antes (usa sus
 modelos locales; si no existen, los descarga de Hugging Face). El resto de este README se
-centra en `project.ipynb`; los conceptos de configuración (panel, *trigger* de estilo,
+centra en `01_finetuning.ipynb`; los conceptos de configuración (panel, *trigger* de estilo,
 *safeguards*) son equivalentes en los tres.
 
 ## Resultados
 
-Rejilla generada por `project_comparison.ipynb` con los **mismos 5 prompts y la misma
+Rejilla generada por `03_comparison.ipynb` con los **mismos 5 prompts y la misma
 semilla** en todos los modelos. De arriba a abajo: modelo **original sin *trigger***, original
 **con *trigger***, **finetuning completo** con *trigger* y **LoRA** con *trigger*.
 
@@ -39,9 +45,9 @@ Tanto el finetuning como la LoRA llevan claramente la imagen al estilo de grabad
 ilustración de libro antiguo, mientras que el modelo original (con o sin *trigger*) mantiene
 un aspecto mucho más fotográfico.
 
-## ¿Qué hace el notebook?
+## ¿Qué hace `01_finetuning.ipynb`?
 
-Todo el trabajo está en **`project.ipynb`**, organizado en pasos:
+El finetuning completo está organizado en pasos:
 
 1. Genera una imagen con el modelo **original** (antes del finetuning).
 2. Carga y prepara el dataset (`Resize` + `CenterCrop` a 512x512).
@@ -83,7 +89,7 @@ automáticamente si el resultado ya existe en disco. Usa los flags `force_retrai
    # edita .env y pon: HF_API_KEY=hf_xxxxxxxx  (token con permisos de escritura)
    ```
 
-3. **Abrir y ejecutar el notebook** `project.ipynb` (en Jupyter / VS Code) de arriba a abajo.
+3. **Abrir y ejecutar el notebook** `01_finetuning.ipynb` (en Jupyter / VS Code) de arriba a abajo.
 
    Todos los ajustes (modelo base, dataset, hiperparámetros, rutas de salida) están
    centralizados en la celda **«Panel de configuración»**; modifícalos ahí si hace falta.
@@ -139,14 +145,14 @@ comparaciones:
 
 ## Salidas
 
-- `finetuned-model-oldbooks/` — pipeline finetuneado guardado en local (`project.ipynb`).
-- `lora-oldbooks/` — adaptador LoRA (`pytorch_lora_weights.safetensors`) y su model card (`project_lora.ipynb`).
+- `finetuned-model-oldbooks/` — pipeline finetuneado guardado en local (`01_finetuning.ipynb`).
+- `lora-oldbooks/` — adaptador LoRA (`pytorch_lora_weights.safetensors`) y su model card (`02_lora.ipynb`).
 - `imagen_antes_finetuning.png` / `imagen_despues_finetuning.png` — comparación del prompt principal.
 - `lora_imagen_antes.png` / `lora_imagen_despues.png` — comparación del prompt principal (LoRA).
-- `comparison_images/` — las 5 imágenes por modelo de la comparación con semilla fija (`project.ipynb`).
-- `lora_comparison_images/` — las 5 imágenes original vs. LoRA con semilla fija (`project_lora.ipynb`).
+- `comparison_images/` — las 5 imágenes por modelo de la comparación con semilla fija (`01_finetuning.ipynb`).
+- `lora_comparison_images/` — las 5 imágenes original vs. LoRA con semilla fija (`02_lora.ipynb`).
 - `comparison_finetuning_vs_lora/` + `comparison_finetuning_vs_lora.png` — rejilla original vs.
-  finetuning vs. LoRA (`project_comparison.ipynb`).
+  finetuning vs. LoRA (`03_comparison.ipynb`).
 - `hf_cache/` — descargas de Hugging Face (modelos y datasets) guardadas dentro del proyecto
   para poder inspeccionarlas.
 
