@@ -53,6 +53,8 @@ wandb/
 *.png
 *.jpg
 *.jpeg
+# Excepcion: la rejilla comparativa SI se versiona (se muestra en el README):
+!comparison_finetuning_vs_lora.png
 samples/
 outputs/
 comparison_images/

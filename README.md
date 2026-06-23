@@ -27,6 +27,18 @@ modelos locales; si no existen, los descarga de Hugging Face). El resto de este 
 centra en `project.ipynb`; los conceptos de configuración (panel, *trigger* de estilo,
 *safeguards*) son equivalentes en los tres.
 
+## Resultados
+
+Rejilla generada por `project_comparison.ipynb` con los **mismos 5 prompts y la misma
+semilla** en todos los modelos. De arriba a abajo: modelo **original sin *trigger***, original
+**con *trigger***, **finetuning completo** con *trigger* y **LoRA** con *trigger*.
+
+![Comparación original vs. finetuning vs. LoRA](comparison_finetuning_vs_lora.png)
+
+Tanto el finetuning como la LoRA llevan claramente la imagen al estilo de grabado /
+ilustración de libro antiguo, mientras que el modelo original (con o sin *trigger*) mantiene
+un aspecto mucho más fotográfico.
+
 ## ¿Qué hace el notebook?
 
 Todo el trabajo está en **`project.ipynb`**, organizado en pasos:
