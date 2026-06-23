@@ -59,6 +59,7 @@ comparison_images/
 # --- Project-specific excludes ---
 pokemon/
 resources/
+notebooks-pontia/
 
 # --- OS / editor cruft ---
 .DS_Store
